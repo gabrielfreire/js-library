@@ -16,5 +16,8 @@ var m = M$();
 console.log(m);
 console.log(m.max([9, 1, 3, 4, 2, 1, 320, 45, 31, 123, 5, 12332, 12, 32, 156, 776, 4]));
 m.mapToElement(users, content);
+for (var i = 0; i < users.length; i++) {
+    m.log(users[i].getFullName());
+}
 m.log();
 m.changeBackgroundColor('red', content);

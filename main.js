@@ -25,6 +25,9 @@
             if (!ar) {
                 throw 'Array does not exist!';
             }
+            if (!element) {
+                throw 'Element not selected';
+            }
             //Traverse array to map
             for (var i = 0; i < ar.length; i++) {
                 //check if the actual element is an User object
@@ -73,15 +76,20 @@
         /**
          * Log a passed array
          */
-        log: function() {
+        log: function(str) {
             var ar = this.ar;
-            //If no array is found, throw an error
-            if (!ar) {
-                throw 'No array was passed to the constructor!';
+            console.warn('>>');
+            if (str) {
+                console.log('-> ' + str);
+            } else if (ar) {
+                for (var i = 0; i < ar.length; i++) {
+                    console.log('>> ' + ar[i]);
+                }
+            } else {
+                //If no array or string is found, throw an error
+                console.error('No array was passed to the constructor!');
             }
-            for (var i = 0; i < ar.length; i++) {
-                console.log(ar[i]);
-            }
+            console.warn('<<');
         }
 
     };
