@@ -97,12 +97,6 @@
 
             }
         },
-        changeBackgroundColor: function(color, el) {
-            if (!el) {
-                throw 'There is no element selected';
-            }
-            el.style = 'background-color:' + color;
-        },
         /**
          * Map through an array and build an <h3> element for every index
          * @param {array} ar 
