@@ -17,13 +17,13 @@
 
     function _navigate(event) {
         //get the current path  global = window
-        var currentPath = global.location.pathname;
-        //get the attribute value of the current button
-        var route = event.target.attributes[0].value;
-        //compare it with the array of routes to find
-        var routeInfo = router.routes.filter(function(r) {
-            return r.path === route;
-        })[0];
+        var currentPath = global.location.pathname,
+            //get the attribute value of the current button
+            route = event.target.attributes[0].value,
+            //compare it with the array of routes to find
+            routeInfo = router.routes.filter(function(r) {
+                return r.path === route;
+            })[0];
         //if no route was found, 404 page
         if (!routeInfo) {
 
@@ -62,11 +62,11 @@
          */
         router: function(r) {
             //get the current path  global = window
-            var currentPath = global.location.pathname;
+            var currentPath = global.location.pathname,
+                //capture all the buttons with route attributes
+                activeRoutes = Array.from(document.querySelectorAll('[lib-route]'));
             //create a new Router object
             global.router = new Router(r);
-            //capture all the buttons with route attributes
-            var activeRoutes = Array.from(document.querySelectorAll('[lib-route]'));
             //if there are any buttons, add an Event listener to each one of them
             if (activeRoutes.length > 0) {
 
@@ -125,7 +125,9 @@
          * @param ar : Array Object
          */
         max: function(ar) {
-            var max = ar[0];
+            var max = ar[0],
+                //get any element with ID #content
+                content = document.getElementById("content");
             //traverse the array to find the maximum value
             for (var i = 0; i < ar.length; i++) {
                 //if the index element is not a number, throw an error
@@ -138,8 +140,6 @@
                     }
                 }
             }
-            //get any element with ID #content
-            var content = document.getElementById("content");
             //add a representation for the array to the HTML
             content.innerHTML += '<strong>The maximum number from the array: ' + ar + ' is: ' + max + '</strong>'
             return max; // return the value
