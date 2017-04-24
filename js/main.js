@@ -187,7 +187,7 @@
     //Borrowing the myLib prototype for the myLib.init prototype
     myLib.init.prototype = myLib.prototype;
     //Making it global for external use
-    global.myLib = global.M$ = myLib;
+    global.myLib = global.ml = myLib;
 
 
 })(window);

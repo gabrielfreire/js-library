@@ -7,7 +7,7 @@ var users = [],
     user3 = new User("John", "McCartney"),
     user4 = new User("Claire", "Murray"),
     content = document.getElementById("content"),
-    m = M$();
+    m = ml();
 
 users.push(user);
 users.push(user2);
