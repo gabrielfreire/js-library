@@ -1,4 +1,6 @@
-;
+/**
+ * In this file i use my library to test its features
+ */
 var users = [];
 var user = new User("Bob", "Marley");
 var user2 = new User("Maria", 'Jose');

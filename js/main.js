@@ -15,23 +15,27 @@
     };
 
     function _navigate(event) {
+        //get the current path  global = window
         var currentPath = global.location.pathname;
+        //get the attribute value of the current button
         var route = event.target.attributes[0].value;
-        console.log(route);
-        console.log(currentPath, ' < current Path');
+        //compare it with the array of routes to find
         var routeInfo = router.routes.filter(function(r) {
             return r.path === route;
         })[0];
-        console.log(routeInfo);
+        //if no route was found, 404 page
         if (!routeInfo) {
-            window.history.pushState({}, '', '404: error');
+
+            window.history.pushState({}, '', '404');
             view.innerHTML = 'No route with this path name';
             view.innerHTML += routeInfo.template;
+
         } else {
+            //else, push state to the browser and render the right template
             window.history.pushState({}, '', routeInfo.path);
-            console.log(window.history);
             view.innerHTML = 'You clicked ' + routeInfo.name + ' route';
             view.innerHTML += routeInfo.template;
+
         }
     };
 
