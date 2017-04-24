@@ -1,3 +1,4 @@
+;
 var users = [];
 var user = new User("Bob", "Marley");
 var user2 = new User("Maria", 'Jose');
@@ -21,3 +22,20 @@ for (var i = 0; i < users.length; i++) {
 }
 m.log();
 m.changeBackgroundColor('red', content);
+//Generate routes
+m.router([{
+        path: '/',
+        name: 'Home',
+        template: '<h1>This is the Home Page</h1>'
+    },
+    {
+        path: '/about',
+        name: 'About',
+        template: '<h1>This is the About Page</h1>'
+    },
+    {
+        path: '/contact',
+        name: 'Contact',
+        template: '<h1>This is the Contact Page</h1>'
+    }
+]);
