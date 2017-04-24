@@ -92,7 +92,7 @@
                 var route = router.routes.filter(function(r) {
                     return r.path === currentPath;
                 })[0];
-                view.innerHTML = '<strong>' + currentPath + ' ' + route + ' route</strong>'
+                view.innerHTML = '<strong>' + currentPath + ' ' + route.name + ' route</strong>'
                 view.innerHTML += route.template;
 
             }
