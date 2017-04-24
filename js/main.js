@@ -4,7 +4,8 @@
      * Feel free to add features and maybe transform it in something great/useful some day
      */
     "use strict";
-    var view = document.querySelector('[libView]') || '';
+    //Default view for the router feature
+    var view = document.querySelector('[lib-view]') || '';
 
     //new an Object
     var myLib = function(ar) {
@@ -65,7 +66,7 @@
             //create a new Router object
             global.router = new Router(r);
             //capture all the buttons with route attributes
-            var activeRoutes = Array.from(document.querySelectorAll('[route]'));
+            var activeRoutes = Array.from(document.querySelectorAll('[lib-route]'));
             //if there are any buttons, add an Event listener to each one of them
             if (activeRoutes.length > 0) {
 

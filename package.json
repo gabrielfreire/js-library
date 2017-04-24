@@ -11,7 +11,7 @@
         "type": "git",
         "url": "git+https://github.com/gabrielfreire/js-library.git"
     },
-    "author": "",
+    "author": "Gabriel Augusto de Lima Freire",
     "license": "ISC",
     "bugs": {
         "url": "https://github.com/gabrielfreire/js-library/issues"
