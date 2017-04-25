@@ -42,3 +42,11 @@ m.router([{
         template: '<h1>This is the Contact Page</h1>'
     }
 ]);
+//Data Binding object
+var values = {
+    name: 'Gabriel',
+    age: 27,
+    surname: 'Freire'
+}
+
+m.bind(values);

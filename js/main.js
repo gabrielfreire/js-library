@@ -8,22 +8,26 @@
     //---------------------------
     //Default view for the router feature
     var view = document.querySelector('[lib-view]') || '',
+        binder = Array.from(document.querySelectorAll('[lib-bind]')),
         //new an Object
         myLib = function(ar) { return new myLib.init(ar); },
         Router = function(routes) { this.routes = routes; };
+
     //---------------------------
     //General METHODS
     //---------------------------
     //This method will change the browse location path to match with the attribute value of the button
     function _navigate(event) {
+        console.log(event.target.attributes);
         //get the current path  global = window
         var currentPath = global.location.pathname,
             //get the attribute value of the current button
-            route = event.target.attributes[0].value,
+            route = event.target.attributes['lib-route'].value,
             //compare it with the array of routes to find
             routeInfo = router.routes.filter(function(r) {
                 return r.path === route;
             })[0];
+
         //if no route was found, 404 page
         if (!routeInfo) {
 
@@ -44,9 +48,26 @@
         var route = router.routes.filter(function(r) { return r.path === currentPath; })[0];
         return route;
     }
+    //this method will return true if the content in HTML is a string interpolation binder 
+    function _isBinder(content) {
+        return content.indexOf('{') > -1 && content.lastIndexOf('}') > -1;
+    }
     //------------------------
 
     myLib.prototype = {
+        /**
+         * Data bind feature: receives an object from the controller and sync its properties with the bind elements
+         */
+        bind: function(values) {
+            for (var properties in values) {
+                for (var i = 0; i < binder.length; i++) {
+                    var binderValue = _isBinder(binder[i].textContent) ? binder[i].textContent.slice(1, binder[i].textContent.lastIndexOf('}')) : null;
+                    if (properties === binderValue) {
+                        binder[i].textContent = values[properties];
+                    }
+                }
+            }
+        },
         /**
          * Method that creates a router
          * @param r: routes array
@@ -177,6 +198,9 @@
     };
 
 
+    console.log(binder[0], ' < binder');
+    console.log(binder[0].textContent, ' < binder content');
+    console.log(_isBinder(binder[0].textContent), ' < isBinder?');
     //Constructor function for the library
     myLib.init = function(ar) {
 

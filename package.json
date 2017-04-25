@@ -1,26 +1,28 @@
 {
-    "name": "my-lib",
-    "version": "1.0.0",
-    "description": "JS Library for study purposes",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node server.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/gabrielfreire/js-library.git"
-    },
-    "author": "Gabriel Augusto de Lima Freire",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/gabrielfreire/js-library/issues"
-    },
-    "devDependencies": {
-        "express": "^4.14.1"
-    },
-    "dependencies": {
-        "morgan": "^1.8.0"
-    },
-    "homepage": "https://github.com/gabrielfreire/js-library#readme"
+  "name": "my-lib",
+  "version": "1.0.0",
+  "description": "JS Library for study purposes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielfreire/js-library.git"
+  },
+  "author": "Gabriel Augusto de Lima Freire",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabrielfreire/js-library/issues"
+  },
+  "devDependencies": {
+    "express": "^4.14.1"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
+    "morgan": "^1.8.0"
+  },
+  "homepage": "https://github.com/gabrielfreire/js-library#readme"
 }

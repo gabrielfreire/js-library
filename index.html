@@ -2,19 +2,52 @@
 
 <head>
     <title>My Library</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 
 <body>
-    <h1>myLib</h1>
-    <!--Lib tests-->
-    <div id="content"></div>
-    <!--Router buttons-->
-    <button lib-route="/">Home</button>
-    <button lib-route="/about">About</button>
-    <button lib-route="/contact">Contact</button>
-    <!-- VIEW -->
-    <div lib-view></div>
+    <div class="container-fluid">
+        <div class="row">
+            <h1 class="jumbotron">myLib</h1>
+        </div>
+        <div class="row">
+            <!--Router buttons-->
+            <button class="btn btn-md btn-info" lib-route="/">Home</button>
+            <button class="btn btn-md btn-info" lib-route="/about">About</button>
+            <button class="btn btn-md btn-info" lib-route="/contact">Contact</button>
+        </div>
+        <!--Lib tests-->
+        <div id="content"></div>
+        <!-- VIEW -->
+        <div lib-view></div>
+        <!--Data binding representation-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h2>Data Binding</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Name:</label>
+                            <span lib-bind>{name}</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Surname:</label>
+                            <span lib-bind>{surname}</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Age:</label>
+                            <span lib-bind>{age}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/User.js"></script>
     <script src="js/libTest.js"></script>
