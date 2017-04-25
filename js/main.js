@@ -4,17 +4,17 @@
      * Feel free to add features and maybe transform it in something great/useful some day
      */
     "use strict";
+    //Global variable declarations
+    //---------------------------
     //Default view for the router feature
     var view = document.querySelector('[lib-view]') || '',
-
         //new an Object
-        myLib = function(ar) {
-            return new myLib.init(ar);
-        },
-        Router = function(routes) {
-            this.routes = routes;
-        };
-
+        myLib = function(ar) { return new myLib.init(ar); },
+        Router = function(routes) { this.routes = routes; };
+    //---------------------------
+    //General METHODS
+    //---------------------------
+    //This method will change the browse location path to match with the attribute value of the button
     function _navigate(event) {
         //get the current path  global = window
         var currentPath = global.location.pathname,
@@ -39,7 +39,14 @@
 
         }
     };
-
+    //this method receives a path and match with the routes array
+    function _matchWithPath(path) {
+        var route = router.routes.filter(function(r) {
+            return r.path === path;
+        })[0];
+        return route;
+    }
+    //------------------------
 
     myLib.prototype = {
         /**
@@ -82,16 +89,12 @@
             //If the current path is '/' ... render the Home template
             if (currentPath === '/') {
                 //use filter feature to get the current template according to the current path
-                var route = router.routes.filter(function(r) {
-                    return r.path === currentPath;
-                })[0];
+                var route = _matchWithPath(currentPath);
                 view.innerHTML += route.template;
 
             } else {
                 //Else look for the right path and render the correct template
-                var route = router.routes.filter(function(r) {
-                    return r.path === currentPath;
-                })[0];
+                var route = _matchWithPath(currentPath);
                 view.innerHTML = '<strong>' + currentPath + ' ' + route.name + ' route</strong>'
                 view.innerHTML += route.template;
 
