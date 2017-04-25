@@ -40,10 +40,8 @@
         }
     };
     //this method receives a path and match with the routes array
-    function _matchWithPath(path) {
-        var route = router.routes.filter(function(r) {
-            return r.path === path;
-        })[0];
+    function _matchWithPath(currentPath) {
+        var route = router.routes.filter(function(r) { return r.path === currentPath; })[0];
         return route;
     }
     //------------------------
