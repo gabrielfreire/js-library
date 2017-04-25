@@ -4,6 +4,7 @@
      * Feel free to add features and maybe transform it in something great/useful some day
      */
     "use strict";
+    //---------------------------
     //Global variable declarations
     //---------------------------
     //Default view for the router feature
@@ -53,7 +54,8 @@
         return content.indexOf('{') > -1 && content.lastIndexOf('}') > -1;
     }
     //------------------------
-
+    //myLib PROTOTYPE functions
+    //------------------------
     myLib.prototype = {
         /**
          * Data bind feature: receives an object from the controller and sync its properties with the bind elements
@@ -126,20 +128,23 @@
         mapToElement: function(ar, element) {
             //If no array is found, throw an error
             if (!ar) {
-                throw 'Array does not exist!';
+                console.error('Array does not exist!');
             }
             if (!element) {
-                throw 'Element not selected';
+                console.error('Element not selected');
             }
             //Traverse array to map
             for (var i = 0; i < ar.length; i++) {
                 //check if the actual element is an User object
-                if (ar[i] instanceof User)
-                //print full name
-                    element.innerHTML += '<h3>Hi ' + ar[i].getFullName() + '</h3>';
-                else
-                //if it isn't an User object, just print the element itself
-                    element.innerHTML += '<h3>Hi ' + ar[i] + '</h3>';
+                if (ar[i] instanceof User) {
+                    if (element)
+                    //print full name
+                        element.innerHTML += '<h3>Hi ' + ar[i].getFullName() + '</h3>';
+                } else {
+                    if (element)
+                    //if it isn't an User object, just print the element itself
+                        element.innerHTML += '<h3>Hi ' + ar[i] + '</h3>';
+                }
             }
         },
         /**
@@ -149,7 +154,7 @@
         max: function(ar) {
             var max = ar[0],
                 //get any element with ID #content
-                content = document.getElementById("content");
+                content = document.getElementById("content") || null;
             //traverse the array to find the maximum value
             for (var i = 0; i < ar.length; i++) {
                 //if the index element is not a number, throw an error
@@ -162,8 +167,10 @@
                     }
                 }
             }
-            //add a representation for the array to the HTML
-            content.innerHTML += '<strong>The maximum number from the array: ' + ar + ' is: ' + max + '</strong>'
+            if (content) {
+                //add a representation for the array to the HTML
+                content.innerHTML += '<strong>The maximum number from the array: ' + ar + ' is: ' + max + '</strong>'
+            }
             return max; // return the value
         },
         /**
