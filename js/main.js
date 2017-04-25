@@ -5,15 +5,15 @@
      */
     "use strict";
     //Default view for the router feature
-    var view = document.querySelector('[lib-view]') || '';
+    var view = document.querySelector('[lib-view]') || '',
 
-    //new an Object
-    var myLib = function(ar) {
-        return new myLib.init(ar);
-    }
-    var Router = function(routes) {
-        this.routes = routes;
-    };
+        //new an Object
+        myLib = function(ar) {
+            return new myLib.init(ar);
+        },
+        Router = function(routes) {
+            this.routes = routes;
+        };
 
     function _navigate(event) {
         //get the current path  global = window
