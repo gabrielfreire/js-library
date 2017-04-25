@@ -8,7 +8,7 @@
     //---------------------------
     //Default view for the router feature
     var view = document.querySelector('[lib-view]') || '',
-        binder = Array.from(document.querySelectorAll('[lib-bind]')),
+        binders = Array.from(document.querySelectorAll('[lib-bind]')),
         //new an Object
         myLib = function(ar) { return new myLib.init(ar); },
         Router = function(routes) { this.routes = routes; };
@@ -60,10 +60,10 @@
          */
         bind: function(values) {
             for (var properties in values) {
-                for (var i = 0; i < binder.length; i++) {
-                    var binderValue = _isBinder(binder[i].textContent) ? binder[i].textContent.slice(1, binder[i].textContent.lastIndexOf('}')) : null;
+                for (var i = 0; i < binders.length; i++) {
+                    var binderValue = _isBinder(binders[i].textContent) ? binders[i].textContent.slice(1, binders[i].textContent.lastIndexOf('}')) : null;
                     if (properties === binderValue) {
-                        binder[i].textContent = values[properties];
+                        binders[i].textContent = values[properties];
                     }
                 }
             }
@@ -197,10 +197,6 @@
 
     };
 
-
-    console.log(binder[0], ' < binder');
-    console.log(binder[0].textContent, ' < binder content');
-    console.log(_isBinder(binder[0].textContent), ' < isBinder?');
     //Constructor function for the library
     myLib.init = function(ar) {
 
