@@ -5,7 +5,7 @@ Feel free to add features and maybe transform it in something great/useful some 
 ## Development
 1. Just clone
 The library code is in `js/main.js`
-The library experiment code is in `js/libTest.js`
+The library experiment code is in `js/controller.js`
 
 2.  `npm install`
 3.  `npm start`

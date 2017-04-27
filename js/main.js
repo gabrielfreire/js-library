@@ -186,18 +186,18 @@
         /**
          * Log a passed array
          */
-        log: function(str) {
-            var ar = this.ar;
+        log: function(content) {
             console.warn('>>');
-            if (str) {
-                console.log('-> ' + str);
-            } else if (ar) {
-                for (var i = 0; i < ar.length; i++) {
-                    console.log('>> ' + ar[i]);
-                }
+            if (content) {
+                if (typeof content === 'object') {
+                    for (var prop in content) {
+                        console.log(prop + ': ' + content[prop]);
+                    }
+                } else
+                    console.log('-> ' + content);
             } else {
                 //If no array or string is found, throw an error
-                console.error('No array was passed to the constructor!');
+                console.error('No content!');
             }
             console.warn('<<');
         }
