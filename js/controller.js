@@ -1,7 +1,8 @@
 /**
  * In this file i use my library to test its features
  */
-var users = [],
+var User = require('./User.js'),
+    users = [],
     user = new User("Bob", "Marley"),
     user2 = new User("Maria", 'Jose'),
     user3 = new User("John", "McCartney"),

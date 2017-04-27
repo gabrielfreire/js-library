@@ -8,7 +8,8 @@
     //Global variable declarations
     //---------------------------
     //Default view for the router feature
-    var view = document.querySelector('[lib-view]') || '',
+    var User = require('./User.js'),
+        view = document.querySelector('[lib-view]') || '',
         binders = Array.from(document.querySelectorAll('[lib-bind]')),
         //new an Object
         myLib = function(ar) { return new myLib.init(ar); },
