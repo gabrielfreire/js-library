@@ -47,14 +47,24 @@
         }
     };
 
+    //Method to set active class to a specific route
     function _setActive(route) {
+        //get all the buttons/links that contain lib-route attribute
         var activeRoutes = Array.from(document.querySelectorAll('[lib-route]'));
+
         activeRoutes.forEach(function(activeRoute) {
-            var actualRoute = activeRoute.attributes['lib-route'].value;
-            if (actualRoute === route) {
-                activeRoute.setAttribute('class', 'btn btn-md btn-info active');
+            //Get the current route and current class from each button/link
+            var currentRoute = activeRoute.attributes['lib-route'].value;
+            var currentClass = activeRoute.attributes['class'].value;
+            //if the current route is the same as the one passed by parameter, set class to Active
+            if (currentRoute === route) {
+
+                activeRoute.setAttribute('class', currentClass + ' active');
+
             } else {
-                activeRoute.setAttribute('class', 'btn btn-md btn-info');
+                //otherwise set the class back to the current class
+                activeRoute.setAttribute('class', currentClass);
+
             }
         });
     }
