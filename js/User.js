@@ -15,4 +15,5 @@ User.prototype.getFullName = function() {
     return this.firstName + ' ' + this.lastName;
 }
 
+//export User module
 module.exports = User;

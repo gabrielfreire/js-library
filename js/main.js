@@ -11,6 +11,7 @@
     var User = require('./User.js'),
         view = document.querySelector('[lib-view]') || '',
         binders = Array.from(document.querySelectorAll('[lib-bind]')),
+        models = Array.from(document.querySelectorAll('[lib-model]')),
         //new an Object
         myLib = function(ar) { return new myLib.init(ar); },
         Router = function(routes) { this.routes = routes; };
@@ -35,14 +36,25 @@
 
             global.history.pushState({}, '404 not found', '404');
             view.innerHTML = 'No route with this path name';
-            view.innerHTML += routeInfo.template;
-
+            if (routeInfo.templateUrl) {
+                _getTemplate(routeInfo.templateUrl, function(content) {
+                    view.innerHTML = content;
+                });
+            } else {
+                view.innerHTML += routeInfo.template;
+            }
         } else {
             //else, push state to the browser and render the right template
             global.history.pushState({}, routeInfo.name, routeInfo.path);
             _setActive(routeInfo.path);
             view.innerHTML = 'You clicked ' + routeInfo.name + ' route';
-            view.innerHTML += routeInfo.template;
+            if (routeInfo.templateUrl) {
+                _getTemplate(routeInfo.templateUrl, function(content) {
+                    view.innerHTML = content;
+                });
+            } else {
+                view.innerHTML += routeInfo.template;
+            }
 
         }
     };
@@ -68,6 +80,17 @@
             }
         });
     }
+
+    function _getTemplate(path, callback) {
+        var request = new XMLHttpRequest();
+
+        request.open('GET', path);
+        request.send(null);
+
+        request.onload = function() {
+            callback(request.responseText);
+        };
+    }
     //this method receives a path and match with the routes array
     function _matchWithPath(currentPath) {
         var route = router.routes.filter(function(r) { return r.path === currentPath; })[0];
@@ -77,6 +100,31 @@
     function _isBinder(content) {
         return content.indexOf('{') > -1 && content.lastIndexOf('}') > -1;
     }
+    //Event method triggered when the user types something in a lib-model field
+    function _changeContent(event) {
+        var value = event.target.value,
+            attrValue = event.target.attributes['lib-model'].value,
+            found = false;
+
+        if (binders.length <= 0) {
+            throw new Error('There are no binders');
+        }
+
+        for (var i = 0; i < binders.length; i++) {
+            var binderAttrValue = binders[i].attributes['lib-bind'].value;
+
+            if (binderAttrValue === attrValue) {
+
+                found = true;
+                binders[i].textContent = value;
+
+            }
+        }
+
+        if (!found) {
+            throw new Error('There are no binders with {' + attrValue + '} name');
+        }
+    }
     //------------------------
     //myLib PROTOTYPE functions
     //------------------------
@@ -85,6 +133,13 @@
          * Data bind feature: receives an object from the controller and sync its properties with the bind elements
          */
         bind: function(values) {
+            //if there are any input field lib-model, attach an event to change a lib-binder content
+            if (models) {
+                models.forEach(function(model) {
+                    model.addEventListener('keyup', _changeContent, false);
+                });
+            }
+
             for (var properties in values) {
                 for (var i = 0; i < binders.length; i++) {
                     var binderValue = _isBinder(binders[i].textContent) ? binders[i].textContent.slice(1, binders[i].textContent.lastIndexOf('}')) : null;
@@ -136,15 +191,26 @@
                 //use filter feature to get the current template according to the current path
                 var route = _matchWithPath(currentPath);
                 _setActive(route.path);
-                view.innerHTML += route.template;
+                if (route.templateUrl) {
+                    _getTemplate(route.templateUrl, function(content) {
+                        view.innerHTML = content;
+                    });
+                } else {
+                    view.innerHTML += route.template;
+                }
 
             } else {
                 //Else look for the right path and render the correct template
                 var route = _matchWithPath(currentPath);
                 _setActive(route.path);
                 view.innerHTML = '<strong>' + currentPath + ' ' + route.name + ' route</strong>'
-                view.innerHTML += route.template;
-
+                if (route.templateUrl) {
+                    _getTemplate(route.templateUrl, function(content) {
+                        view.innerHTML = content;
+                    });
+                } else {
+                    view.innerHTML += route.template;
+                }
             }
         },
         /**
