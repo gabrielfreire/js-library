@@ -33,18 +33,31 @@
         //if no route was found, 404 page
         if (!routeInfo) {
 
-            window.history.pushState({}, '', '404');
+            global.history.pushState({}, '404 not found', '404');
             view.innerHTML = 'No route with this path name';
             view.innerHTML += routeInfo.template;
 
         } else {
             //else, push state to the browser and render the right template
-            window.history.pushState({}, '', routeInfo.path);
+            global.history.pushState({}, routeInfo.name, routeInfo.path);
+            _setActive(routeInfo.path);
             view.innerHTML = 'You clicked ' + routeInfo.name + ' route';
             view.innerHTML += routeInfo.template;
 
         }
     };
+
+    function _setActive(route) {
+        var activeRoutes = Array.from(document.querySelectorAll('[lib-route]'));
+        activeRoutes.forEach(function(activeRoute) {
+            var actualRoute = activeRoute.attributes['lib-route'].value;
+            if (actualRoute === route) {
+                activeRoute.setAttribute('class', 'btn btn-md btn-info active');
+            } else {
+                activeRoute.setAttribute('class', 'btn btn-md btn-info');
+            }
+        });
+    }
     //this method receives a path and match with the routes array
     function _matchWithPath(currentPath) {
         var route = router.routes.filter(function(r) { return r.path === currentPath; })[0];
@@ -99,8 +112,8 @@
             //if there are any buttons, add an Event listener to each one of them
             if (activeRoutes.length > 0) {
 
-                activeRoutes.forEach(function(route) {
-                    route.addEventListener('click', _navigate, false);
+                activeRoutes.forEach(function(activeRoute) {
+                    activeRoute.addEventListener('click', _navigate, false);
                 });
 
             } else {
@@ -112,11 +125,13 @@
             if (currentPath === '/') {
                 //use filter feature to get the current template according to the current path
                 var route = _matchWithPath(currentPath);
+                _setActive(route.path);
                 view.innerHTML += route.template;
 
             } else {
                 //Else look for the right path and render the correct template
                 var route = _matchWithPath(currentPath);
+                _setActive(route.path);
                 view.innerHTML = '<strong>' + currentPath + ' ' + route.name + ' route</strong>'
                 view.innerHTML += route.template;
 
