@@ -8,8 +8,7 @@
     //Global variable declarations
     //---------------------------
     //Default view for the router feature
-    var User = require('./User.js'),
-        view = document.querySelector('[lib-view]') || '',
+    var view = document.querySelector('[lib-view]') || '',
         binders = Array.from(document.querySelectorAll('[lib-bind]')),
         models = Array.from(document.querySelectorAll('[lib-model]')),
         //new an Object
@@ -67,15 +66,14 @@
         activeRoutes.forEach(function(activeRoute) {
             //Get the current route and current class from each button/link
             var currentRoute = activeRoute.attributes['lib-route'].value;
-            var currentClass = activeRoute.attributes['class'].value;
             //if the current route is the same as the one passed by parameter, set class to Active
             if (currentRoute === route) {
 
-                activeRoute.setAttribute('class', currentClass + ' active');
+                activeRoute.classList.add('active');
 
             } else {
                 //otherwise set the class back to the current class
-                activeRoute.setAttribute('class', currentClass);
+                activeRoute.classList.remove('active');
 
             }
         });
@@ -135,18 +133,24 @@
         bind: function(values) {
             //if there are any input field lib-model, attach an event to change a lib-binder content
             if (models) {
+
                 models.forEach(function(model) {
                     model.addEventListener('keyup', _changeContent, false);
                 });
+
             }
 
             for (var properties in values) {
+
                 for (var i = 0; i < binders.length; i++) {
                     var binderValue = _isBinder(binders[i].textContent) ? binders[i].textContent.slice(1, binders[i].textContent.lastIndexOf('}')) : null;
+
                     if (properties === binderValue) {
                         binders[i].textContent = values[properties];
                     }
+
                 }
+
             }
         },
         /**
@@ -167,13 +171,13 @@
          *  }
          * ]
          */
-        router: function(r) {
+        router: function(routes) {
             //get the current path  global = window
             var currentPath = global.location.pathname,
                 //capture all the buttons with route attributes
                 activeRoutes = Array.from(document.querySelectorAll('[lib-route]'));
             //create a new Router object
-            global.router = new Router(r);
+            global.router = new Router(routes);
             //if there are any buttons, add an Event listener to each one of them
             if (activeRoutes.length > 0) {
 
@@ -220,22 +224,23 @@
         mapToElement: function(ar, element) {
             //If no array is found, throw an error
             if (!ar) {
-                console.error('Array does not exist!');
+                throw Error('Array does not exist!');
             }
             if (!element) {
-                console.error('Element not selected');
+                throw Error('No Element was passed');
             }
             //Traverse array to map
             for (var i = 0; i < ar.length; i++) {
                 //check if the actual element is an User object
-                if (ar[i] instanceof User) {
-                    if (element)
-                    //print full name
-                        element.innerHTML += '<h3>Hi ' + ar[i].getFullName() + '</h3>';
+                if (ar[i] instanceof Object) {
+                    //print key values and its properties
+                    element.innerHTML += '<h3>Object: </h3>';
+                    for (var prop in ar[i]) {
+                        element.innerHTML += '<h5>' + prop + ': ' + ar[prop] + '</h5>';
+                    }
                 } else {
-                    if (element)
                     //if it isn't an User object, just print the element itself
-                        element.innerHTML += '<h3>Hi ' + ar[i] + '</h3>';
+                    element.innerHTML += '<h3>' + ar[i] + '</h3>';
                 }
             }
         },
@@ -266,17 +271,7 @@
             return max; // return the value
         },
         /**
-         * If an array was set to the object, retrieve it
-         */
-        getArray: function() {
-            //If no array is found, throw an error
-            if (!this.ar) {
-                throw 'No array was passed to the constructor!';
-            }
-            return this.ar;
-        },
-        /**
-         * Log a passed array
+         * Log method
          */
         log: function(content) {
             console.warn('>>');
