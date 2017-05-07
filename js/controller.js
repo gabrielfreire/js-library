@@ -30,7 +30,7 @@ m.log();
 m.router([{
         path: '/',
         name: 'Home',
-        templateUrl: '../partials/homee.html'
+        templateUrl: '../partials/home.html'
     },
     {
         path: '/about',

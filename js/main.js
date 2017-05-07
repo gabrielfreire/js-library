@@ -79,11 +79,12 @@
         });
     }
 
-    function _fileExists(path) {
-        var http = new XMLHttpRequest();
-        http.open('HEAD', path, true);
-        http.send();
-        return http.status == 200;
+    function _fileExists(content) {
+        if (content.substr(0, 6) === '<html>') {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     function _getTemplate(path, callbackSuccess, callBackError) {
@@ -91,20 +92,25 @@
 
         request.open('GET', path, true);
 
+        request.send(null);
+
         request.onreadystatechange = function(event) {
             if (request.readyState === 4) {
+                var exist = _fileExists(request.responseText);
+                if (!exist) {
+                    if (callBackError) {
+                        callBackError(request.statusText);
+                        throw Error('Template URL ' + path + ' was not found.');
+                    } else {
+                        throw Error('Template URL ' + path + ' was not found.');
+                    }
+                }
                 if (request.status === 200) {
                     callbackSuccess(request.responseText);
-                } else {
-                    if (typeof callBackError !== "object") {
-                        console.info('You are trying to pass a non function parameter as callback for Error');
-                        return;
-                    }
-                    callBackError(request);
                 }
             }
         };
-        request.send();
+
 
     }
     //this method receives a path and match with the routes array
@@ -214,9 +220,6 @@
                 var route = _matchWithPath(currentPath);
                 _setActive(route.path);
                 if (route.templateUrl) {
-                    if (!_fileExists(route.templateUrl)) {
-                        throw Error('File for route ' + route.name + ' at ' + route.templateUrl + ' was not found.');
-                    }
                     _getTemplate(route.templateUrl, function(content) {
                         view.innerHTML = content;
                     }, function(err) {
@@ -303,7 +306,9 @@
             if (content) {
                 if (typeof content === 'object') {
                     for (var prop in content) {
-                        console.log(prop + ': ' + content[prop]);
+                        if (typeof prop !== 'object') {
+                            console.log(prop + ': ' + content[prop]);
+                        }
                     }
                 } else
                     console.log('-> ' + content);
