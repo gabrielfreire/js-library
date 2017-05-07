@@ -79,15 +79,33 @@
         });
     }
 
-    function _getTemplate(path, callback) {
+    function _fileExists(path) {
+        var http = new XMLHttpRequest();
+        http.open('HEAD', path, true);
+        http.send();
+        return http.status == 200;
+    }
+
+    function _getTemplate(path, callbackSuccess, callBackError) {
         var request = new XMLHttpRequest();
 
-        request.open('GET', path);
-        request.send(null);
+        request.open('GET', path, true);
 
-        request.onload = function() {
-            callback(request.responseText);
+        request.onreadystatechange = function(event) {
+            if (request.readyState === 4) {
+                if (request.status === 200) {
+                    callbackSuccess(request.responseText);
+                } else {
+                    if (typeof callBackError !== "object") {
+                        console.info('You are trying to pass a non function parameter as callback for Error');
+                        return;
+                    }
+                    callBackError(request);
+                }
+            }
         };
+        request.send();
+
     }
     //this method receives a path and match with the routes array
     function _matchWithPath(currentPath) {
@@ -196,8 +214,13 @@
                 var route = _matchWithPath(currentPath);
                 _setActive(route.path);
                 if (route.templateUrl) {
+                    if (!_fileExists(route.templateUrl)) {
+                        throw Error('File for route ' + route.name + ' at ' + route.templateUrl + ' was not found.');
+                    }
                     _getTemplate(route.templateUrl, function(content) {
                         view.innerHTML = content;
+                    }, function(err) {
+                        console.error('An error has occured ', err);
                     });
                 } else {
                     view.innerHTML += route.template;
@@ -211,6 +234,8 @@
                 if (route.templateUrl) {
                     _getTemplate(route.templateUrl, function(content) {
                         view.innerHTML = content;
+                    }, function(err) {
+                        console.error('An error has occured ', err);
                     });
                 } else {
                     view.innerHTML += route.template;
