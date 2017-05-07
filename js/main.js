@@ -223,7 +223,7 @@
                     _getTemplate(route.templateUrl, function(content) {
                         view.innerHTML = content;
                     }, function(err) {
-                        console.error('An error has occured ', err);
+                        console.error('An error has occured ');
                     });
                 } else {
                     view.innerHTML += route.template;
@@ -238,7 +238,7 @@
                     _getTemplate(route.templateUrl, function(content) {
                         view.innerHTML = content;
                     }, function(err) {
-                        console.error('An error has occured ', err);
+                        console.error('An error has occured ');
                     });
                 } else {
                     view.innerHTML += route.template;
